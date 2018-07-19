@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+<generator uri="http://jekyllrb.com" version="2.4.0">Jekyll</generator>
+<link href="https://manatran.github.io//feed.xml" rel="self" type="application/atom+xml" />
+<link href="https://manatran.github.io//" rel="alternate" type="text/html" />
+<updated>2018-02-28T20:25:32+01:00</updated>
+<id>https://manatran.github.io//</id>
+<subtitle>The path to a healthy lifestyle starts with us.</subtitle>
+<author>
+<name>Simon Decloedt &amp; Manaus Transez</name>
+</author>
+</feed>

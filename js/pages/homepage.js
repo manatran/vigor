@@ -15,7 +15,7 @@ var Home = {
       tempStr += '<h1>' + resto.NAAM +'</h1>';
       tempStr += '<p>' + resto.STRAAT + ' ' + resto.NUMMER + '</p>';
       tempStr += '<div class="buttons">';
-      tempStr += '<a href="/restaurant/?name=' + Utils.removeSpaces(resto.NAAM).toLowerCase() + '">More info</a>';
+      tempStr += '<a href="/restaurant/?name=' + i + '&sort=az">More info</a>';
       tempStr += '<a href="/restaurants/">All restaurants</a>';
       tempStr += '</div>';
       tempStr += '</div>';

@@ -129,7 +129,7 @@ function initMap() {
   // Add a marker clusterer to manage the markers.
   var markerCluster = new MarkerClusterer(map, markers, {
     styles: [{
-      url: "/projects/vigor/images/markers/m.png",
+      url: "/images/markers/m.png",
       width: 50,
       height: 45,
       textSize: 14,

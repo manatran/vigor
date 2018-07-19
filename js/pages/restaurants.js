@@ -16,7 +16,7 @@ var Restaurants = {
       tempStr += '<p class="title">' + Utils.capitalizeFirstLetter(resto.NAAM) + '</p>';
       tempStr += '<p class="light">' + resto.STRAAT + ' ' + resto.NUMMER + '</p>';
       tempStr += '</span>';
-      tempStr += '<a class="action" href="/projects/vigor/restaurant/?id=' + i + '&sort=' + sort + '" >';
+      tempStr += '<a class="action" href="/restaurant/?id=' + i + '&sort=' + sort + '" >';
       tempStr += '<i class="material-icons">keyboard_arrow_right</i>';
       tempStr += '</a>';
       tempStr += '</li>';
@@ -53,7 +53,7 @@ var Restaurants = {
         tempStr += '<p class="title">' + Utils.capitalizeFirstLetter(restaurant.NAAM) + '</p>';
         tempStr += '<p class="light">' + restaurant.STRAAT + ' ' + restaurant.NUMMER + '</p>';
         tempStr += '</span>';
-        tempStr += '<a class="action" href="/projects/vigor/restaurant/?id=' + i + '&sort=' + sort + '" >';
+        tempStr += '<a class="action" href="/restaurant/?id=' + i + '&sort=' + sort + '" >';
         tempStr += '<i class="material-icons">keyboard_arrow_right</i>';
         tempStr += '</a>';
         tempStr += '</li>';

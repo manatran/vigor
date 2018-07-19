@@ -7,6 +7,7 @@ var Home = {
   },
   //set featured restaurant
   getData: Utils.getJSONByPromise('https://datatank.stad.gent/4/milieuennatuur/ecoplan.json?callback=json_callback').then(function (results){
+			results = results.sort(Utils.sortAZ('NAAM'));
       var i = Math.floor((Math.random() * results.length));
       var resto = results[i];
       var tempStr=  '';

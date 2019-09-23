@@ -16,7 +16,7 @@ var Social = {
         tempStr += '<span class="content">';
         tempStr += '<p class="title">' + user.username + '</p>';
         tempStr += '</span>';
-        tempStr += '<a class="action" href="/messages/?user=' + user.username + '" >';
+        tempStr += '<a class="action" href="../messages/?user=' + user.username + '" >';
         tempStr += '<i class="material-icons">message</i>';
         tempStr += '</a>';
         tempStr += '</li>';

@@ -1,13 +1,13 @@
 if (localStorage.length == 0) {
-  window.location.replace("vigor/login/");
+  window.location.replace("/vigor/login/");
 }
 
 var Main = {
   getUser: function() {
-    console.log(localStorage.getData("Vigor"));
-    var user = localStorage.getData("Vigor").currentUser;
-    if (user == "") {
-      window.location.replace("vigor/login/");
+    var data = localStorage.getData("Vigor");
+    var user = data.currentUser;
+    if (user === "" || user === null) {
+      window.location.replace("/vigor/login/");
     } else {
       document.querySelector("p.username").innerHTML = user;
     }
@@ -18,7 +18,7 @@ var Main = {
       var Vigor = localStorage.getData("Vigor");
       Vigor.currentUser = "";
       localStorage.setData("Vigor", Vigor);
-      window.location.replace("vigor/login/");
+      window.location.replace("/vigor/login/");
     };
   },
   menu: function() {

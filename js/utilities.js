@@ -1,15 +1,15 @@
 // Extend Storage function to allow for JSON in localstorage
-Storage.prototype.setData = function (key, value) {
+Storage.prototype.setData = function(key, value) {
   localStorage.setItem(key, JSON.stringify(value));
 };
-Storage.prototype.getData = function (key) {
+Storage.prototype.getData = function(key) {
   return JSON.parse(localStorage.getItem(key));
 };
 
 // Extend Array function
-Array.prototype.getSum = function(){
+Array.prototype.getSum = function() {
   //returns the sum of numbers in an array
-  return this.reduce(function add(a, b){
+  return this.reduce(function add(a, b) {
     return a + b;
   }, 0);
 };
@@ -17,20 +17,25 @@ Array.prototype.getSum = function(){
 Number.prototype.padWithDigits = function(n) {
   var txt = this.toString();
   while (txt.length < n) {
-    txt = '0' + txt;
+    txt = "0" + txt;
   }
   return txt;
 };
 Number.prototype.toRad = function() {
-  return this * Math.PI / 180;
+  return (this * Math.PI) / 180;
 };
 // Extend Date function
 Date.prototype.toShortDateString = function() {
-  var tempStr = '';
+  var tempStr = "";
   var dayOfTheMonth = this.getDate();
   var month = this.getMonth();
   var year = this.getFullYear();
-  tempStr += dayOfTheMonth.padWithDigits(2) + '-' + month.padWithDigits(2) + '-' + year.padWithDigits(4);
+  tempStr +=
+    dayOfTheMonth.padWithDigits(2) +
+    "-" +
+    month.padWithDigits(2) +
+    "-" +
+    year.padWithDigits(4);
   return tempStr;
 };
 var Utils = {
@@ -46,25 +51,26 @@ var Utils = {
   },
   sortAZ: function(property) {
     var sortOrder = 1;
-    if(property[0] === "-") {
+    if (property[0] === "-") {
       sortOrder = -1;
       property = property.substr(1);
     }
-    return function (a,b) {
-      var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+    return function(a, b) {
+      var result =
+        a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
       return result * sortOrder;
-    }
+    };
   },
   //remove spaces
-  removeSpaces: function(string){
+  removeSpaces: function(string) {
     //define 'é'
     var re = new RegExp(/\u0301|\u00e9/g);
     //remove space
-    string = string.replace(/\s/g, '');
+    string = string.replace(/\s/g, "");
     //replace é with e
-    string = string.replace(re,'e');
+    string = string.replace(re, "e");
     //remove '
-    string = string.replace("'", '');
+    string = string.replace("'", "");
     return string;
   },
   //capitalize first letter
@@ -84,26 +90,28 @@ var Utils = {
     return false;
   },
   //function calculates distance walked based on previous locations
-  getDistanceWalked: function(el, el2){
+  getDistanceWalked: function(el, el2) {
     var positions = [];
     var distances = [];
     var pos = {};
 
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function (position) {
+      navigator.geolocation.getCurrentPosition(function(position) {
         pos = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
-        }
-        setInterval(function(){
+        };
+        setInterval(function() {
           positions.push(pos);
         }, 5000);
-        setInterval(function(){
-          for(var i = 0; i < positions.length; i+=2){
+        setInterval(function() {
+          for (var i = 0; i < positions.length; i += 2) {
             distances.push(
               Utils.calculateDistanceBetweenTwoCoordinates(
-                positions[i].lat, positions[i].lng,
-                positions[i+1].lat, positions[i+1].lng
+                positions[i].lat,
+                positions[i].lng,
+                positions[i + 1].lat,
+                positions[i + 1].lng
               )
             );
             var sum = distances.getSum();
@@ -111,9 +119,14 @@ var Utils = {
             sum += 500;
             distances = [sum];
             positions = [];
-            var distanceWalked = sum.toFixed(0) < 1000 ? sum.toFixed(0) + ' m' : (sum.toFixed(0)/1000) + ' km';
+            var distanceWalked =
+              sum.toFixed(0) < 1000
+                ? sum.toFixed(0) + " m"
+                : sum.toFixed(0) / 1000 + " km";
             document.getElementById(el).innerHTML = distanceWalked;
-            document.getElementById(el2).innerHTML = (sum.toFixed(0) * 0.05).toFixed(1);
+            document.getElementById(el2).innerHTML = (
+              sum.toFixed(0) * 0.05
+            ).toFixed(1);
             //multiply distance by 0.5 because walking 1000m burns 50calories (1000/50 = 0.5)
           }
         }, 10001);
@@ -125,8 +138,13 @@ var Utils = {
     var el = document.getElementById(el);
     var displayLocation = function(latitude, longitude) {
       var request = new XMLHttpRequest();
-      var method = 'GET';
-      var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&sensor=true';
+      var method = "GET";
+      var url =
+        "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
+        latitude +
+        "," +
+        longitude +
+        "&sensor=true";
       var async = true;
 
       request.open(method, url, async);
@@ -149,16 +167,16 @@ var Utils = {
     };
 
     var errorCallback = function(error) {
-      var errorMessage = 'Unknown error';
+      var errorMessage = "Unknown error";
       switch (error.code) {
         case 1:
-          errorMessage = 'Unknown';
+          errorMessage = "Unknown";
           break;
         case 2:
-          errorMessage = 'Unavailable';
+          errorMessage = "Unavailable";
           break;
         case 3:
-          errorMessage = 'Timeout';
+          errorMessage = "Timeout";
           break;
       }
       if (el != null) {
@@ -172,14 +190,19 @@ var Utils = {
       maximumAge: 0
     };
 
-    navigator.geolocation.getCurrentPosition(successCallback, errorCallback, options);
+    navigator.geolocation.getCurrentPosition(
+      successCallback,
+      errorCallback,
+      options
+    );
   },
   //returns temperature in Ghent
   getWeather: function(el) {
     var el = document.getElementById(el);
 
     function WeatherWidget() {
-      this.API_URL = 'https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%3D12591774%20AND%20u%3D%22c%22&format=json&diagnostics=true&callback=';
+      this.API_URL =
+        "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%3D12591774%20AND%20u%3D%22c%22&format=json&diagnostics=true&callback=";
       this.channel;
       this.temp;
       this.loadData = function() {
@@ -200,20 +223,22 @@ var Utils = {
         var item = this.channel.item;
         var temperature = item.condition.temp;
         this.temp = temperature;
-        el.innerHTML = this.temp + '&deg;C';
+        el.innerHTML = this.temp + "&deg;C";
       };
-    };
+    }
     var ww1 = new WeatherWidget();
     ww1.loadData();
   },
   getJSONByPromise: function(url) {
     return new Promise(function(resolve, reject) {
       var xhr = new XMLHttpRequest();
-      xhr.open('get', url, true);
-      xhr.responseType = 'json';
+      xhr.open("get", url, true);
+      xhr.responseType = "json";
       xhr.onload = function() {
         if (xhr.status == 200) {
-          var data = (!xhr.responseType) ? JSON.parse(xhr.response) : xhr.response;
+          var data = !xhr.responseType
+            ? JSON.parse(xhr.response)
+            : xhr.response;
           resolve(data);
         } else {
           reject(status);
@@ -225,72 +250,79 @@ var Utils = {
       xhr.send();
     });
   },
-    getParamsFromUrl: function(url) {
-        var regex = /[?&]([^=#]+)=([^&#]*)/g,
-            params = {},
-            match;
-        while(match = regex.exec(url)) {
-            params[match[1]] = match[2];
-        }
-        return params;
-    },
+  getParamsFromUrl: function(url) {
+    var regex = /[?&]([^=#]+)=([^&#]*)/g,
+      params = {},
+      match;
+    while ((match = regex.exec(url))) {
+      params[match[1]] = match[2];
+    }
+    return params;
+  },
   getJSONPByPromise: function(url) {
-    url = url + '_' + new Date().getTime() + '_' + Math.round(new Date().getTime() / (Math.random() * 10));
-    var script = document.createElement('script');
+    url =
+      url +
+      "_" +
+      new Date().getTime() +
+      "_" +
+      Math.round(new Date().getTime() / (Math.random() * 10));
+    var script = document.createElement("script");
     script.src = url;
 
     script.onload = function() {
       this.remove();
     }; // After scripts is loaded and executed, remoe it from the DOM
 
-    var head = document.getElementsByTagName('head')[0];
+    var head = document.getElementsByTagName("head")[0];
     head.insertBefore(script, head.firstChild); // Insert script into the DOM
 
     var params = this.getParamsFromUrl(url);
-    var callbackStr = 'json_callback';
+    var callbackStr = "json_callback";
 
-    if (params['prefix']) {
-      callbackStr = params['prefix'];
-    } else if (params['callback']) {
-      callbackStr = params['callback'];
+    if (params["prefix"]) {
+      callbackStr = params["prefix"];
+    } else if (params["callback"]) {
+      callbackStr = params["callback"];
     }
 
     return new Promise(function(resolve, reject) {
       window[callbackStr] = function(data) {
         resolve(data);
-      }
+      };
     });
   },
   guid: function() {
     var i, random;
-    var uuid = '';
+    var uuid = "";
 
     for (i = 0; i < 32; i++) {
-      random = Math.random() * 16 | 0;
+      random = (Math.random() * 16) | 0;
       if (i === 8 || i === 12 || i === 16 || i === 20) {
-        uuid += '-';
+        uuid += "-";
       }
-      uuid += (i === 12 ? 4 : (i === 16 ? (random & 3 | 8) : random)).toString(16);
+      uuid += (i === 12 ? 4 : i === 16 ? (random & 3) | 8 : random).toString(
+        16
+      );
     }
     return uuid;
   },
   pluralize: function(count, word) {
-    return count === 1 ? word : word + 's';
+    return count === 1 ? word : word + "s";
   },
   trim: function(str) {
-    return str.replace(/^\s+|\s+$/gm, '');
+    return str.replace(/^\s+|\s+$/gm, "");
   },
   timeToTwitterDateTimeString: function(time) {
     var now = new Date();
     var timediff = (now.getTime() - time) / 1000;
     if (timediff < 60) {
-      return Math.floor(timediff) + 's';
+      return Math.floor(timediff) + "s";
     } else if (timediff < 3600) {
-      return Math.floor(timediff / 60) + 'm';
+      return Math.floor(timediff / 60) + "m";
     } else if (timediff < 3600 * 24) {
-      return Math.floor(timediff / 3600) + 'h';
+      return Math.floor(timediff / 3600) + "h";
     } else if (timediff < 3600 * 24 * 7) {
-      return Math.floor(timediff / (3600 * 24)) + 'd';
+      return Math.floor(timediff / (3600 * 24)) + "d";
     } else {
       return new Date(time).toLocaleDateString();
     }
@@ -307,10 +339,11 @@ var Utils = {
     var lat1 = lat1.toRad();
     var lat2 = lat2.toRad();
 
-    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    var a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    var d = R * c
+    var d = R * c;
     return d; //in km
   },
   getGEOLocationByPromise: function() {
@@ -336,14 +369,15 @@ var Utils = {
                 break;
             }
             reject(error);
-          }, {
+          },
+          {
             timeout: 10000,
             enableHighAccuracy: true
           }
-        )
+        );
       } else {
         reject("HTML5 Geolocation not supported!");
       }
     });
   }
-}
+};

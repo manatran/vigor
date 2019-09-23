@@ -1,46 +1,46 @@
-if(localStorage.length == 0){
-  window.location.replace('/login/');
+if (localStorage.length == 0) {
+  window.location.replace("vigor/login/");
 }
 
 var Main = {
-  getUser: function(){
-    var user = localStorage.getData('Vigor').currentUser;
-    if(user == ''){
-      window.location.replace('/login/');
-    }
-    else{
-      document.querySelector('p.username').innerHTML = user;
-    }
-  },
-  logout: function(){
-    var logoutBtn = document.querySelector('a#logout');
-    logoutBtn.onclick = function(){
-      var Vigor = localStorage.getData('Vigor');
-      Vigor.currentUser = '';
-      localStorage.setData('Vigor', Vigor);
-      window.location.replace('/login/');
+  getUser: function() {
+    console.log(localStorage.getData("Vigor"));
+    var user = localStorage.getData("Vigor").currentUser;
+    if (user == "") {
+      window.location.replace("vigor/login/");
+    } else {
+      document.querySelector("p.username").innerHTML = user;
     }
   },
-  menu: function(){
-    var burger = document.querySelector('#burger');
-    var sidebar = document.querySelector('#sidebar');
+  logout: function() {
+    var logoutBtn = document.querySelector("a#logout");
+    logoutBtn.onclick = function() {
+      var Vigor = localStorage.getData("Vigor");
+      Vigor.currentUser = "";
+      localStorage.setData("Vigor", Vigor);
+      window.location.replace("vigor/login/");
+    };
+  },
+  menu: function() {
+    var burger = document.querySelector("#burger");
+    var sidebar = document.querySelector("#sidebar");
 
     if (burger != null) {
       burger.onclick = function() {
-        sidebar.classList.toggle('active');
+        sidebar.classList.toggle("active");
       };
     }
   },
 
-  scrollTop: function(){
+  scrollTop: function() {
     //define button
     var btnTop = document.getElementById("btn-top");
     //distance from top
     var dist = 256;
 
     //if btn exists, add eventlistener, onclick -> scroll to top
-    if(btnTop != null){
-      btnTop.addEventListener('click', function(e){
+    if (btnTop != null) {
+      btnTop.addEventListener("click", function(e) {
         e.preventDefault();
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0; // For IE and Firefox
@@ -49,13 +49,16 @@ var Main = {
 
     //show button when scrolling
     window.onscroll = function() {
-      scrollFunction()
+      scrollFunction();
     };
 
     //show / hide button
     function scrollFunction() {
-      if(btnTop != null){
-        if (document.body.scrollTop > dist || document.documentElement.scrollTop > dist){
+      if (btnTop != null) {
+        if (
+          document.body.scrollTop > dist ||
+          document.documentElement.scrollTop > dist
+        ) {
           btnTop.style.opacity = 1;
         } else {
           btnTop.style.opacity = 0;
@@ -64,7 +67,7 @@ var Main = {
     }
   },
 
-  accordion: function(){
+  accordion: function() {
     //declare list-item
     var acc = document.getElementsByClassName("item");
     //for every item,
@@ -82,11 +85,10 @@ var Main = {
           panel.style.maxHeight = panel.scrollHeight + "px";
           this.lastElementChild.innerHTML = "arrow_drop_up";
         }
-      }
+      };
     }
-  },
-
-}
+  }
+};
 
 Main.getUser();
 Main.logout();
